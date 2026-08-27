@@ -6,7 +6,6 @@ file_path = 'sample.txt'
 
 # Check if file exists first to avoid crashing
 if os.path.exists(file_path):
-    # 'r' means read mode. 'with' ensures the file closes automatically
     with open(file_path, 'r') as file:
         text = file.read()
     
@@ -23,7 +22,7 @@ if os.path.exists(file_path):
             
     print("Word counting complete!")
     
-    # Save to JSON ('w' means write mode)
+    # Save to JSON
     with open('results.json', 'w') as json_file:
         # indent=4 makes the JSON file readable (pretty print)
         json.dump(word_counts, json_file, indent=4)

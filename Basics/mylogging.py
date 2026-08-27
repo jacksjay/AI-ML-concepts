@@ -9,7 +9,7 @@ logging.basicConfig(
 def divide_numbers(a, b):
     logging.info(f"Attempting to divide {a} by {b}")
     
-    # try/except block prevents the app from crashing on errors
+    # try/except block 
     try:
         result = a / b
         logging.info(f"Success! Result is {result}")

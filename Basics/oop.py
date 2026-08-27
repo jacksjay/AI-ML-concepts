@@ -12,7 +12,6 @@ class Document:
         # Join them back into a single string
         return " ".join(summary_words) + "..."
 
-# --- How to use the class ---
 if __name__ == "__main__":
     # Create an "instance" of the Document class
     my_doc = Document("AI History", "Artificial intelligence began in the 1950s with Alan Turing.")

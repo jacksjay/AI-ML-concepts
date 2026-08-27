@@ -5,8 +5,7 @@ import time
 async def api_call(request_id):
     print(f"Request {request_id} started...")
     
-    # await asyncio.sleep(2) simulates waiting for an AI to reply. 
-    # Because it is 'await', Python goes to do other things instead of freezing!
+    
     await asyncio.sleep(2) 
     
     print(f"Request {request_id} finished!")
@@ -16,7 +15,6 @@ async def main():
     start_time = time.time()
     
     # run 3 calls at the same time
-    # asyncio.gather runs them concurrently
     tasks = [
         api_call(1),
         api_call(2),
