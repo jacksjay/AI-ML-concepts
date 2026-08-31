@@ -1,4 +1,5 @@
 import json
+import aiofiles
 from fastapi import FastAPI,Path, HTTPException,Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, computed_field
@@ -45,14 +46,19 @@ class PatientUpdate(BaseModel):
     weight: Annotated[Optional[float], Field(default=None, gt=0)]
 
 #function to load the json file to access the data all time
-def load_data():
-    with open('patients.json','r') as f:
-        data = json.load(f)
+async def load_data():
+    async with aiofiles.open('patients.json', mode='r') as f:
+        contents = await f.read()
+    data = json.loads(contents)
+    # with open('patients.json','r') as f:
+        #data = json.load(f)
     return data
 #function to save data(it receives the data as dict and puts in json)
-def save_data(data):
-    with open('patients.json', 'w') as f:
-        json.dump(data, f)
+async def save_data(data):
+    async with aiofiles.open('patients.json', 'w') as f:
+        await f.write(json.dumps(data))
+    #with open('patients.json', 'w') as f:
+        #json.dump(data, f)
 
 
 
@@ -66,13 +72,13 @@ async def about():
 
 @app.get("/view")
 async def view():
-    data = load_data()
+    data = await load_data()
     return data
 
 @app.get('/patient/{patient_id}')
 async def view_patient(patient_id: str = Path(..., description= 'ID of the patient', examples='P001')):
     #load all the patients
-    data = load_data()
+    data = await load_data()
 
     #Check if id exists return that else error
     if patient_id in data:
@@ -93,7 +99,7 @@ order: str = Query('asc', description='Sort in asc or desc order')):
     if order not in ['asc','desc']:
         raise HTTPException(status_code=400, detail='Invalid order select asc or desc  ')
 
-    data = load_data()
+    data = await load_data()
     sort_order = True if order=='desc' else False
     sorted_data = sorted(data.values(), key = lambda x: x.get(sort_by,0 ), reverse = sort_order)
     return sorted_data
@@ -102,7 +108,7 @@ order: str = Query('asc', description='Sort in asc or desc order')):
 @app.post('/create')
 async def create_patient(patient: Patient):
     #load the data
-    data = load_data()
+    data = await load_data()
     #Check if the patient already exists
     if patient.id in data:
         raise HTTPException(status_code=400, detail='Patient already exists')
@@ -110,7 +116,7 @@ async def create_patient(patient: Patient):
     data[patient.id] = patient.model_dump(exclude=['id']) #exclude id as key is id and the values are rest fields
 
     # save the data using utility function defined above
-    save_data(data)
+    await save_data(data)
 
     #return json response
     return JSONResponse(status_code= 201, content={'message': 'Patient created Successfully'})
@@ -119,7 +125,7 @@ async def create_patient(patient: Patient):
 #PUT request to edit data 
 @app.put('/edit/{patient_id}')
 async def update_patient(patient_id: str, patient_update: PatientUpdate):
-    data = load_data()
+    data = await load_data()
 
     #Check if patient exits
     if patient_id not in data:
@@ -146,7 +152,7 @@ async def update_patient(patient_id: str, patient_update: PatientUpdate):
     data[patient_id] = existing_patient_info
 
     #save data
-    save_data(data)
+    await save_data(data)
 
     #Success
     return JSONResponse(status_code=200, content={'message':'Patient updated successfully'})
@@ -155,7 +161,7 @@ async def update_patient(patient_id: str, patient_update: PatientUpdate):
 @app.delete('/delete/{patient_id}')
 async def delete_patient(patient_id: str):
     #load data
-    data = load_data()
+    data = await load_data()
 
     #Check if id exists else show error
     if patient_id not in data:
@@ -164,7 +170,7 @@ async def delete_patient(patient_id: str):
     del data[patient_id]
 
     #save data
-    save_data(data)
+    await save_data(data)
 
     #Success
     return JSONResponse(status_code=200, content={'message':'patient deleted successfully'})
