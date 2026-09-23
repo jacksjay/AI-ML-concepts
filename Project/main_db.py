@@ -16,17 +16,17 @@ VALID_SORT_FIELDS = ['height', 'weight', 'age', 'gender']
 
 
 @app.get("/")
-async def home():
+def home():
     return {"message": "Patient Management System (DB-backed)"}
 
 
 @app.get("/view", response_model=list[schemas.PatientResponse])
-async def view_all(db: Session = Depends(get_db)):
+def view_all(db: Session = Depends(get_db)):
     return crud.get_all_patients(db)
 
 
 @app.get("/patient/{patient_id}", response_model=schemas.PatientResponse)
-async def view_patient(
+def view_patient(
     patient_id: str = Path(..., description='ID of the patient', examples=['P001']),
     db: Session = Depends(get_db),
 ):
@@ -37,7 +37,7 @@ async def view_patient(
 
 
 @app.get("/sort", response_model=list[schemas.PatientResponse])
-async def sort_patients(
+def sort_patients(
     sort_by: str = Query(..., description=f'Sort on the basis of {VALID_SORT_FIELDS}'),
     order: str = Query('asc', description='Sort in asc or desc order'),
     db: Session = Depends(get_db),
@@ -51,7 +51,7 @@ async def sort_patients(
 
 
 @app.post("/create", status_code=201)
-async def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)):
+def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)):
     existing = crud.get_patient(db, patient.id)
     if existing:
         raise HTTPException(status_code=400, detail='Patient already exists')
@@ -61,7 +61,7 @@ async def create_patient(patient: schemas.PatientCreate, db: Session = Depends(g
 
 
 @app.put("/edit/{patient_id}")
-async def update_patient(
+def update_patient(
     patient_id: str,
     patient_update: schemas.PatientUpdate,
     db: Session = Depends(get_db),
@@ -73,7 +73,7 @@ async def update_patient(
 
 
 @app.delete("/delete/{patient_id}")
-async def delete_patient(patient_id: str, db: Session = Depends(get_db)):
+def delete_patient(patient_id: str, db: Session = Depends(get_db)):
     deleted = crud.delete_patient(db, patient_id)
     if not deleted:
         raise HTTPException(status_code=404, detail='Patient not found')

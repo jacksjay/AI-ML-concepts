@@ -8,7 +8,7 @@ BASE_URL = "http://127.0.0.1:8001"
 # Set the main title of the web page
 st.title(" AI Patient Management System")
 
-# Create 5 distinct tabs to organize our UI neatly
+# Create 5 distinct tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "View All", "Sort Data", "Search Patient", "Add Patient", "Update/Delete"
 ])
