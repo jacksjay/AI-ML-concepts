@@ -1,9 +1,13 @@
 
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set the base URL of our FastAPI server. 
-BASE_URL = "http://127.0.0.1:8001"
+BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8001")
 
 # Set the main title of the web page
 st.title(" AI Patient Management System")
@@ -18,7 +22,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 with tab1:
     st.header("All Patients Database")
     
-    # Create a button. When clicked, it returns True and runs the code block below
+    # Create a button.
     if st.button("Fetch All Patients"):
         
         response = requests.get(f"{BASE_URL}/view")
@@ -98,7 +102,7 @@ with tab4:
             p_id = st.text_input("Patient ID (e.g., P001)")
             p_name = st.text_input("Full Name")
             p_city = st.text_input("City")
-            p_gender = st.selectbox("Gender", ["male", "female", "other"])
+            p_gender = st.selectbox("Gender", ["male", "female", "others"])
             
         with col2:
             p_age = st.number_input("Age", min_value=0, max_value=120)
@@ -137,7 +141,7 @@ with tab5:
     target_id = st.text_input("Enter Patient ID to modify/delete")
     
     # Delete Section
-    # We put the delete button directly in the tab (not in a form)
+    # We put the delete button directly in the tab
     if st.button("Delete Patient", type="primary"): # type="primary" makes the button red/accent colored
         if target_id:
             # Send a DELETE HTTP request

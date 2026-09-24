@@ -10,10 +10,10 @@ class PatientBase(BaseModel):
     height: Annotated[float, Field(..., gt=0, description='Height in meters')]
     weight: Annotated[float, Field(..., gt=0, description='Weight in Kgs')]
 
-    @field_validator('gender', mode='before')
+    @field_validator('gender', mode='before') #value before type coercion
     @classmethod
     def normalize_gender(cls, v):
-        if isinstance(v, str):
+        if isinstance(v, str): #used to check value belongs to a particular type or not(true/false)
             return v.strip().lower()
         return v
 
