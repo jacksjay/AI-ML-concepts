@@ -1,0 +1,49 @@
+EDA:
+Q1. What is feature scaling? Why it is required
+Q2. What is data leakage, and how can it happen during the preprocessing phase?
+Q3. Differences between:
+Standard Scaler & Robust Scaler
+Yeo-Johnson & Box-Cox Transformer
+
+Q4. When would you prefer median imputation over mean imputation? 
+Q5. What is the difference between feature selection and dimensionality reduction 
+Q6. How do you handle class imbalance during the preprocessing phase?
+Q7. Why do we need feature selection? Why not just throw all available data into the model? 
+Q8. Once outliers are detected, what are the different ways to treat them? 
+Q9. When should you use a log transformation? 
+
+
+Supervised & Unsupervised learning:
+Q1. Explain the bias–variance trade-off. and how it relates to underfitting and overfitting.
+Q2. Why does linear regression use squared errors instead of absolute errors? 
+Q3. What is the difference between decision trees and random forests? 
+Q4. How do you choose the optimal number of clusters in K-Means? 
+Q5. What is regularization? (Difference between ridge & lasso)
+Q6. Difference between K-means & DBSCAN
+Q7. Explain PCA.
+
+
+Model Evaluation:
+Q1. What is cross-validation? 
+Q2. When should you prioritize precision over recall? 
+Q3. What is the purpose of random state?
+Q4. What is the difference between model parameters and hyperparameters? 
+Q5. What is the difference between fit(), & predict() in sci-kit
+Q6. What is the difference between the training score and the cross-validation score? 
+
+
+XGBOOST/LightGBM :
+Q1. When would you choose Random Forest instead of XGBoost or LightGBM? 
+Q2. What is learning rate in gradient boosting? 
+Q3. Difference between
+ XGBoost and LightGBM
+Optuna and GridSearchCV
+Q4. Can XGBoost and LightGBM be used with cross-validation? 
+
+Explainability:
+Q1. What is the difference between model interpretability and explainability? 
+Q2. What are the different types of SHAP plots? 
+Q3. SHAP vs LIME
+    
+
+
