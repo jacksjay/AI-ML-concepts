@@ -1,0 +1,10 @@
+What are activation functions? Why do we need them?
+What is backpropagation algorithm, and how it works?
+How do weight initilizations strategies affect ANN performance?
+What is the vanishing gradient and exploding gradient problem?
+What is overfitting in ANN, and how do you prevent it?
+How do attention mechanisms  in neural network works?
+How can bias in training data affect the performance of ANN?
+What are dropout layers, how they help in training ANNs?
+What are LSTMs?
+What is transfer learning and how it is implemented in ANNs
